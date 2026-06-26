@@ -1,5 +1,4 @@
-﻿
-using PROGP3;
+﻿using PROGP3;
 using System;
 using System.IO;
 using System.Media;
@@ -117,6 +116,30 @@ namespace PROGP3
 
             ChatBox.AppendText(text + Environment.NewLine);
             ChatBox.ScrollToEnd();
+        }
+
+        private void StartQuiz_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (ChatMessage message in conversationManager.ProcessInput("start quiz"))
+            {
+                AppendToChat(message);
+            }
+        }
+
+        private void ViewTasks_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (ChatMessage message in conversationManager.ProcessInput("view tasks"))
+            {
+                AppendToChat(message);
+            }
+        }
+
+        private void ActivityLog_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (ChatMessage message in conversationManager.ProcessInput("show activity log"))
+            {
+                AppendToChat(message);
+            }
         }
     }
 }

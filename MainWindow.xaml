@@ -30,15 +30,63 @@
 
         <!-- Input area -->
         <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="UserInput" FontSize="14" Background="#44475A" Foreground="White"
-                     CaretBrush="White" BorderBrush="#6272A4" BorderThickness="1"
-                     KeyDown="UserInput_KeyDown" Padding="5"/>
-            <Button Grid.Column="1" Content="Send" FontSize="14" Background="#50FA7B" Foreground="#1E1E2E"
-                    Width="70" Margin="10,0,0,0" Click="SendButton_Click" FontWeight="Bold"/>
+
+            <!-- INPUT -->
+            <TextBox x:Name="UserInput"
+             FontSize="14"
+             Background="#44475A"
+             Foreground="White"
+             CaretBrush="White"
+             BorderBrush="#6272A4"
+             BorderThickness="1"
+             KeyDown="UserInput_KeyDown"
+             Padding="5"
+             Grid.Row="0"
+             Grid.Column="0"/>
+
+            <!-- SEND BUTTON -->
+            <Button Grid.Row="0"
+            Grid.Column="1"
+            Content="Send"
+            FontSize="14"
+            Background="#50FA7B"
+            Foreground="#1E1E2E"
+            Width="70"
+            Margin="10,0,0,0"
+            Click="SendButton_Click"
+            FontWeight="Bold"/>
+
+            <!-- QUICK ACTION BUTTONS -->
+            <StackPanel Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,10,0,0">
+
+                <Button Content="Start Quiz"
+                Width="100"
+                Margin="5"
+                Click="StartQuiz_Click"/>
+
+                <Button Content="View Tasks"
+                Width="100"
+                Margin="5"
+                Click="ViewTasks_Click"/>
+
+                <Button Content="Activity Log"
+                Width="120"
+                Margin="5"
+                Click="ActivityLog_Click"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

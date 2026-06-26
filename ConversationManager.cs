@@ -60,13 +60,11 @@ namespace PROGP3
             string intent = DetectIntent(cleanedMessage);
 
             if (message.Contains("thank you") ||
-    message.Contains("thanks"))
+                message.Contains("thanks"))
             {
                 AppendUserMessage(trimmedInput, messages);
 
                 string sentiment = sentimentService.DetectSentiment(message);
-
-
 
                 if (sentiment == "happy")
                 {
@@ -83,7 +81,6 @@ namespace PROGP3
 
                 return messages;
             }
-
 
             if (message.Contains("how are you"))
             {
@@ -112,6 +109,7 @@ namespace PROGP3
 
             if (HandleFollowUp(message, messages))
                 return messages;
+
             if (message.Contains("what can i ask") || message.Contains("what can i ask you about"))
             {
                 messages.Add(new ChatMessage("Bot: You can ask me about passwords, scams, privacy, phishing, safe browisng and more.", Colors.Yellow));
@@ -159,24 +157,35 @@ namespace PROGP3
                 }
             }
 
-            // TASK: Add Task
+            // ================= TASK ASSISTANT =================
+
+            // ADD TASK
             if (message.Contains("add task"))
             {
-                string response = taskManager.AddTask(trimmedInput);
+                string taskText = ExtractTaskText(trimmedInput);
+
+                string response = taskManager.AddTask(taskText);
+
                 messages.Add(new ChatMessage("Bot: " + response, Colors.Yellow));
-                LogActivity("Task added: " + response);
+
+                // ✅ LOG THIS ACTION
+                LogActivity("Task created: " + taskText, "Task");
+
                 return messages;
             }
 
-
-            // TASK: View tasks
+            // VIEW TASKS
             if (message.Contains("view tasks") || message.Contains("show tasks"))
             {
                 messages.Add(new ChatMessage("Bot: " + taskManager.ViewTasks(), Colors.Yellow));
+
+                // LOG THIS ACTION
+                LogActivity("Viewed tasks", "Task");
+
                 return messages;
             }
 
-            // TASK: Delete task
+            // DELETE TASK
             if (message.Contains("delete task"))
             {
                 string idStr = new string(message.Where(char.IsDigit).ToArray());
@@ -184,6 +193,9 @@ namespace PROGP3
                 if (int.TryParse(idStr, out int id))
                 {
                     messages.Add(new ChatMessage("Bot: " + taskManager.DeleteTask(id), Colors.Yellow));
+
+                    // LOG THIS ACTION
+                    LogActivity("Task deleted: ID " + id, "Task");
                 }
                 else
                 {
@@ -193,7 +205,7 @@ namespace PROGP3
                 return messages;
             }
 
-            // TASK: Complete task
+            // COMPLETE TASK
             if (message.Contains("complete task") || message.Contains("mark task"))
             {
                 string idStr = new string(message.Where(char.IsDigit).ToArray());
@@ -201,6 +213,9 @@ namespace PROGP3
                 if (int.TryParse(idStr, out int id))
                 {
                     messages.Add(new ChatMessage("Bot: " + taskManager.CompleteTask(id), Colors.Yellow));
+
+                    // LOG THIS ACTION
+                    LogActivity("Task completed: ID " + id, "Task");
                 }
                 else
                 {
@@ -209,6 +224,8 @@ namespace PROGP3
 
                 return messages;
             }
+
+            // ================= END TASK ASSISTANT =================
             // REMINDER detection
             if (message.Contains("remind me"))
             {
@@ -238,76 +255,16 @@ namespace PROGP3
 
             ShowDefaultResponse(messages);
             return messages;
-            // ================= NLP SMART ROUTING =================
-
-            if (intent == "add_task")
-            {
-                string taskText = ExtractTaskText(trimmedInput);
-
-                string response = taskManager.AddTask(taskText);
-
-                messages.Add(new ChatMessage("Bot: " + response, Colors.Yellow));
-
-                LogActivity("NLP Task added: " + taskText);
-
-                return messages;
-            }
-
-            if (intent == "reminder")
-            {
-                string taskText = ExtractTaskText(trimmedInput);
-                int days = ExtractReminderDays(trimmedInput);
-
-                if (days == 0)
-                    days = 1;
-
-                messages.Add(new ChatMessage(
-                    $"Bot: Reminder set for '{taskText}' in {days} day(s).",
-                    Colors.Yellow));
-
-                LogActivity($"Reminder set: {taskText} in {days} days");
-
-                return messages;
-            }
-
-            if (intent == "quiz")
-            {
-                quizMode = true;
-                string q = quizManager.StartQuiz();
-
-                messages.Add(new ChatMessage("Bot: Starting Cybersecurity Quiz!", Colors.Cyan));
-                messages.Add(new ChatMessage("Bot: " + q, Colors.Yellow));
-
-                LogActivity("Quiz started via NLP");
-
-                return messages;
-            }
-
-            if (intent == "activity_log")
-            {
-                string log = "Recent Activity:\n";
-
-                foreach (var entry in activityLog.TakeLast(10))
-                {
-                    log += "- " + entry + "\n";
-                }
-
-                messages.Add(new ChatMessage("Bot: " + log, Colors.Green));
-
-                return messages;
-            }
-
-            if (intent == "view_tasks")
-            {
-                messages.Add(new ChatMessage("Bot: " + taskManager.ViewTasks(), Colors.Yellow));
-                return messages;
-            }
-
-            // END NLP
         }
+
+        private void LogActivity(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         // helper methods below ProcessInput
 
-        private void LogActivity(string action)
+        private void LogActivity(string action, string v)
         {
             activityLog.Add($"{DateTime.Now}: {action}");
 
