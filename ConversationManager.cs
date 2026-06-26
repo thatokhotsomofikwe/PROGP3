@@ -157,7 +157,7 @@ namespace PROGP3
                 }
             }
 
-            // ================= TASK ASSISTANT =================
+            // TASK ASSISTANT
 
             // ADD TASK
             if (message.Contains("add task"))
@@ -168,7 +168,7 @@ namespace PROGP3
 
                 messages.Add(new ChatMessage("Bot: " + response, Colors.Yellow));
 
-                // ✅ LOG THIS ACTION
+                // LOG THIS ACTION
                 LogActivity("Task created: " + taskText, "Task");
 
                 return messages;
@@ -225,7 +225,7 @@ namespace PROGP3
                 return messages;
             }
 
-            // ================= END TASK ASSISTANT =================
+            // END TASK ASSISTANT 
             // REMINDER detection
             if (message.Contains("remind me"))
             {
@@ -236,7 +236,7 @@ namespace PROGP3
                 return messages;
             }
 
-            if (message.Contains("in ") && message.Contains("day"))
+            if (message.Contains("in") && message.Contains("day"))
             {
                 int days = ExtractNumber(message);
 
