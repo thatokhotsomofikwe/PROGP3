@@ -1,0 +1,44 @@
+﻿<Window x:Class="PROGP3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PROGP3"
+        mc:Ignorable="d"
+        Title="A.J - Cybersecurity Awareness Bot" Height="600" Width="800"
+        Background="#1E1E2E" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header with logo and bot name -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+            <Image Source="/Assets/logo.jpg" Width="60" Height="60" Margin="0,0,15,0" Stretch="Uniform"/>
+            <TextBlock Text="A.J - Cybersecurity Awareness Bot" FontSize="28" FontWeight="Bold" 
+                       Foreground="#00E5FF" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Chat display -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <TextBox x:Name="ChatBox" FontFamily="Consolas" FontSize="14" Background="#282A36"
+                     Foreground="#F8F8F2" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0"
+                     VerticalScrollBarVisibility="Auto" AcceptsReturn="True"/>
+        </ScrollViewer>
+
+        <!-- Input area -->
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="UserInput" FontSize="14" Background="#44475A" Foreground="White"
+                     CaretBrush="White" BorderBrush="#6272A4" BorderThickness="1"
+                     KeyDown="UserInput_KeyDown" Padding="5"/>
+            <Button Grid.Column="1" Content="Send" FontSize="14" Background="#50FA7B" Foreground="#1E1E2E"
+                    Width="70" Margin="10,0,0,0" Click="SendButton_Click" FontWeight="Bold"/>
+        </Grid>
+    </Grid>
+</Window>
