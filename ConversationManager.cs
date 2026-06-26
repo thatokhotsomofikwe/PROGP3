@@ -257,9 +257,14 @@ namespace PROGP3
             return messages;
         }
 
-        private void LogActivity(string v)
+        private void LogActivity(string action)
         {
-            throw new NotImplementedException();
+            activityLog.Add($"{DateTime.Now}: {action}");
+
+            if (activityLog.Count > 10)
+            {
+                activityLog.RemoveAt(0);
+            }
         }
 
         // helper methods below ProcessInput
